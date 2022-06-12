@@ -27,7 +27,7 @@ namespace own
         explicit array(const _T& _elem = 0) noexcept
         {    
             for(usize_t i = 0; i < _size; i++){
-                arr[i] = _elem;
+                this->arr[i] = _elem;
             }
         }    
 
@@ -35,12 +35,12 @@ namespace own
     public:
         c_expr const_ptr data() const noexcept
         {
-            return arr;
+            return this->arr;
         }
 
         c_expr pointer data() noexcept
         {
-            return arr;
+            return this->arr;
         }
 
         c_expr usize_t size() const noexcept
@@ -53,14 +53,32 @@ namespace own
             return _size == 0;
         }
 
-        c_expr void swap() const noexcept;
+        c_expr void swap() const noexcept
+        {КРОВЬЮ и ПОТОМ ХУЯРЮ НА РАБОТУ!
+
+        }
+
+        c_expr void fill(const _T& _elem) const noexcept
+        {
+
+        }
+
+        c_expr iterator begin() const noexcept
+        {
+
+        }
+
+        c_expr iterator end() const noexcept
+        {
+            
+        }
     public:
         c_expr const_ref operator[](usize_t _i) const
         {
             if(_i >= _size){
                 throw out_of_range("out of array", _i);
             }
-            return arr[_i];
+            return this->arr[_i];
         }
 
         c_expr reference operator[](usize_t _i)
@@ -68,10 +86,18 @@ namespace own
             if(_i >= _size){
                 throw out_of_range("out of array", _i);
             }
-            return arr[_i];
+            return this->arr[_i];
         }
 
-        friend bool operator==(const array<_T, _size> _l, const array<_T, _size> _r);
+        friend c_expr bool operator==(const array<_T, _size>& _l, const array<_T, _size>& _r) noexcept
+        {
+            return _l.arr == _r.arr;
+        }
+
+        friend c_expr bool operator!=(const array<_T, _size>& _l, const array<_T, _size>& _r) noexcept
+        {
+            return _l.arr != _r.arr;
+        }
     private:
         _T arr[_size];
     };

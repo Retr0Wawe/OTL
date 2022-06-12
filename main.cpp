@@ -2,10 +2,11 @@
 
 #include <iostream>
 #include <array>
+#include <algorithm>
+
+using namespace own;
 
 int main()
 {
     
-    
-
-}
+}   
