@@ -3,7 +3,10 @@
 
 namespace own
 {
-    
+    class vector
+    {
+
+    };
 }
 
 #endif

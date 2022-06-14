@@ -4,31 +4,86 @@
 #include "exception.hpp"
 #include "defines.hpp"
 #include "utils.hpp"
+#include "allocator.hpp"
 
 namespace own
 {
     template<class _T, usize_t _size>
     class array
     {
+    public:
+        class iterator;
+    public:
         using const_ptr = const _T*;
         using pointer = _T*;
         using const_ref = const _T&; 
         using reference = _T&;
+        using const_iterator = const iterator;
     public:
         class iterator
         {
-            iterator();
+        public:
+            iterator(_T* _ptr) noexcept : ptr(_ptr) 
+            {   }
 
             ~iterator() = default;
+        public:
+            c_expr reference operator++() noexcept
+            {
+                return *(++this->ptr);
+            }
+
+            c_expr reference operator++(int) noexcept
+            {
+                return *(this->ptr++);
+            }
+
+            c_expr reference operator--() noexcept
+            {
+                return *(--this->ptr);
+            }
+
+            c_expr reference operator--(int) noexcept
+            {
+                return *(this->ptr--);
+            }
+
+            c_expr reference operator+(usize_t _i) noexcept
+            {
+                return (this->ptr + _i);
+            }
+
+            c_expr reference operator-(usize_t _i) noexcept
+            {
+                return (this->ptr - _i);
+            }
+
+            c_expr const_ref operator*() const noexcept
+            {
+                return *this->ptr;
+            }
+
+            c_expr reference operator*() noexcept
+            {
+                return *this->ptr;
+            }
+
+            c_expr friend bool operator==(const iterator& _l, const iterator& _r) noexcept
+            {
+                return _l.ptr == _r.ptr;
+            }
+
+            c_expr friend bool operator!=(const iterator& _l, const iterator& _r) noexcept
+            {
+                return _l.ptr != _r.ptr;
+            }
         private:
             pointer ptr;
         };
     public:
         explicit array(const _T& _elem = 0) noexcept
         {    
-            for(usize_t i = 0; i < _size; i++){
-                this->arr[i] = _elem;
-            }
+            own::fill(arr, arr + _size, _elem);
         }    
 
         ~array() = default;
@@ -53,24 +108,46 @@ namespace own
             return _size == 0;
         }
 
-        c_expr void swap() const noexcept
-        {КРОВЬЮ и ПОТОМ ХУЯРЮ НА РАБОТУ!
-
+        c_expr void swap(array<_T, _size>& _r) noexcept
+        {
+            for(auto i = 0lu; i < _size; i++){
+                own::swap(this->arr[i], _r.arr[i]);
+            }
         }
 
         c_expr void fill(const _T& _elem) const noexcept
         {
-
+            own::fill(this->arr, this->arr + _size, _elem);
         }
 
-        c_expr iterator begin() const noexcept
+        c_expr iterator begin() noexcept
         {
-
+            return iterator(&this->arr[0]);
         }
 
-        c_expr iterator end() const noexcept
+        c_expr iterator end() noexcept
         {
-            
+            return iterator(&this->arr[_size]);
+        }
+
+        c_expr const_ref front() const noexcept
+        {
+            return this->arr[0];
+        }
+
+        c_expr reference front() noexcept
+        {
+            return this->arr[0];
+        }
+
+        c_expr const_ref back() const noexcept
+        {
+            return this->arr[_size - 1];
+        }
+
+        c_expr reference back() noexcept
+        {
+            return this->arr[_size - 1];
         }
     public:
         c_expr const_ref operator[](usize_t _i) const
