@@ -130,6 +130,16 @@ namespace own
             return iterator(&this->arr[_size]);
         }
 
+        c_expr const_iterator cbegin() const
+        {
+            return const_iterator(&this->arr[0]);
+        }
+
+        c_expr const_iterator cend() const
+        {
+            return const_iterator(&this->arr[size]);
+        }
+
         c_expr const_ref front() const noexcept
         {
             return this->arr[0];

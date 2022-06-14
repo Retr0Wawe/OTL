@@ -9,12 +9,9 @@ using namespace own;
 
 int main()
 {
-    array<int, 10> arr(10);
-    array<int, 10> arr2(9);
-    
-    arr.swap(arr2);
+    const std::array<int, 4> f = {1,2,3,4};
 
-    for_each(arr.begin(), arr.end(), [&](auto c){
-        std::cout << c << " ";
-    });
+    for(auto it = f.begin(); it != f.end(); it++){
+        std::cout << *it;
+    }
 }   
