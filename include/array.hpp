@@ -12,74 +12,12 @@ namespace own
     class array
     {
     public:
-        class iterator;
-    public:
         using const_ptr = const _T*;
         using pointer = _T*;
         using const_ref = const _T&; 
         using reference = _T&;
-        using const_iterator = const iterator;
-    public:
-        class iterator
-        {
-        public:
-            iterator(_T* _ptr) noexcept : ptr(_ptr) 
-            {   }
-
-            ~iterator() = default;
-        public:
-            c_expr reference operator++() noexcept
-            {
-                return *(++this->ptr);
-            }
-
-            c_expr reference operator++(int) noexcept
-            {
-                return *(this->ptr++);
-            }
-
-            c_expr reference operator--() noexcept
-            {
-                return *(--this->ptr);
-            }
-
-            c_expr reference operator--(int) noexcept
-            {
-                return *(this->ptr--);
-            }
-
-            c_expr reference operator+(usize_t _i) noexcept
-            {
-                return (this->ptr + _i);
-            }
-
-            c_expr reference operator-(usize_t _i) noexcept
-            {
-                return (this->ptr - _i);
-            }
-
-            c_expr const_ref operator*() const noexcept
-            {
-                return *this->ptr;
-            }
-
-            c_expr reference operator*() noexcept
-            {
-                return *this->ptr;
-            }
-
-            c_expr friend bool operator==(const iterator& _l, const iterator& _r) noexcept
-            {
-                return _l.ptr == _r.ptr;
-            }
-
-            c_expr friend bool operator!=(const iterator& _l, const iterator& _r) noexcept
-            {
-                return _l.ptr != _r.ptr;
-            }
-        private:
-            pointer ptr;
-        };
+        using const_iterator = const _T*;
+        using iterator = _T*;
     public:
         explicit array(const _T& _elem = 0) noexcept
         {    
@@ -122,22 +60,32 @@ namespace own
 
         c_expr iterator begin() noexcept
         {
-            return iterator(&this->arr[0]);
+            return &this->arr[0];
         }
 
         c_expr iterator end() noexcept
         {
-            return iterator(&this->arr[_size]);
+            return &this->arr[_size];
         }
 
-        c_expr const_iterator cbegin() const
+        c_expr const_iterator begin() const noexcept
         {
-            return const_iterator(&this->arr[0]);
+            return &this->arr[0];
         }
 
-        c_expr const_iterator cend() const
+        c_expr const_iterator end() const noexcept
         {
-            return const_iterator(&this->arr[size]);
+            return &this->arr[_size];
+        }
+
+        c_expr const_iterator cbegin() const noexcept
+        {
+            return &this->arr[0];
+        }
+
+        c_expr const_iterator cend() const noexcept
+        {
+            return &this->arr[_size];
         }
 
         c_expr const_ref front() const noexcept

@@ -9,9 +9,9 @@ using namespace own;
 
 int main()
 {
-    const std::array<int, 4> f = {1,2,3,4};
+    const array<int, 5> c;
 
-    for(auto it = f.begin(); it != f.end(); it++){
-        std::cout << *it;
+    for(auto it = c.cbegin(); it != c.cend(); it++){
+        std::cout << *it << std::endl;
     }
 }   
